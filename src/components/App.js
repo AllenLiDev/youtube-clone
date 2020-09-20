@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from './SearchBar';
 import youtube from '../apis/youtube';
+import VideoList from './VideoList';
 
 const App = () => {
 
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <div>
       <SearchBar onFormSubmit={onTermSubmit} />
-      video: {videos.length}.
+      <VideoList videos={videos} />
     </div>
   );
 }
