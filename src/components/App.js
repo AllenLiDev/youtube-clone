@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchBar from './SearchBar';
 import youtube from '../apis/youtube';
 
-class App extends React.Component {
+const App = () => {
 
-  onTermSubmit = term => {
-    youtube.get("/search", {
+  const [videos, setVideos] = useState([]);
+
+  const onTermSubmit = async term => {
+    const response = await youtube.get("/search", {
       params: {
         q: term,
         part: "snippet",
+        type: 'video',
         maxResults: 5,
         key: process.env.REACT_APP_YOUTUBE_KEY
       }
     });
+    setVideos(response.data.items);
   };
-  render() {
-    return <div>
-      <SearchBar onFormSubmit={this.onTermSubmit} />
-    </div>;
 
-  }
+  return (
+    <div>
+      <SearchBar onFormSubmit={onTermSubmit} />
+      video: {videos.length}.
+    </div>
+  );
 }
 
 export default App;
